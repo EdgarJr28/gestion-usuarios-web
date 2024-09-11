@@ -1,0 +1,65 @@
+<div class="flex h-screen bg-gray-100 relative">
+  <!-- Sidebar -->
+  <aside
+    class="w-64 bg-blue-800 text-white flex flex-col fixed inset-y-0 left-0 transform -translate-x-full transition-transform duration-300 lg:translate-x-0 lg:static lg:flex z-50"
+    [ngClass]="{ 'translate-x-0': isSidebarOpen, '-translate-x-full': !isSidebarOpen }">
+    <div class="flex items-center justify-center h-16 bg-blue-900">
+      <h1 class="text-2xl font-semibold">Dashboard</h1>
+    </div>
+    <nav class="flex-1 p-4">
+      <ul>
+        <li class="mb-2">
+          <a routerLink="/dashboard/usuarios" routerLinkActive="bg-blue-600"
+            class="block py-2 px-4 rounded hover:bg-blue-600">Usuarios</a>
+        </li>
+        <li class="mb-2">
+          <a routerLink="/dashboard/areas" routerLinkActive="bg-blue-600"
+            class="block py-2 px-4 rounded hover:bg-blue-600">Áreas</a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Overlay para cerrar el sidebar al hacer clic fuera -->
+  <div class="fixed inset-0 bg-black bg-opacity-50 lg:hidden transition-opacity duration-300 z-40" *ngIf="isSidebarOpen"
+    (click)="closeSidebar()">
+  </div>
+
+  <!-- Main content -->
+  <div class="flex-1 p-6">
+    <!-- Mobile menu button -->
+    <header class="flex items-center py-4 lg:hidden">
+      <h2 class="text-sm font-bold mr-16">Bienvenido al Panel de Control</h2>
+      <button (click)="toggleSidebar()" class="bg-blue-500 text-white py-2 px-4 rounded">
+        <i class="fas fa-bars"></i>
+      </button>
+    </header>
+
+    <!-- Main header -->
+    <header class="hidden lg:flex items-center justify-between py-4  max-w-96 sm:max-w-full m-4">
+      <h2 class="sm:text-3xl font-bold">Bienvenido al Panel de Control</h2>
+      <button (click)="logout()" class="bg-red-500 text-white py-2 px-4 rounded transi duration-150 hover:bg-white hover:border hover:border-red-400 hover:text-red-400">Cerrar Sesión</button>
+    </header>
+
+    <!-- Dashboard widgets -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
+      <div class="bg-green-200 max-w-80 sm:max-w-full p-2 rounded-lg shadow-md hover:scale-105 transition-all duration-150">
+        <h3 class="text-sm sm:text-base   font-semibold mb-4">Usuarios Activos</h3>
+        <p class=" text-md sm:text-lg  font-bold">{{ activeUsersCount }}</p>
+      </div>
+      <div class="bg-green-200 max-w-80 sm:max-w-full p-2 rounded-lg shadow-md hover:scale-105 transition-all duration-150">
+        <h3 class="text-base font-semibold mb-4">Áreas Activas</h3>
+        <p class="text-lg font-bold">{{ activeAreasCount }}</p>
+      </div>
+      <div class="bg-blue-200 max-w-80 sm:max-w-full p-2 rounded-lg shadow-md hover:scale-105 transition-all duration-150">
+        <h3 class="text-base font-semibold mb-4">Líderes de Área</h3>
+        <p class="text-lg font-bold">{{ activeAreasCount }}</p>
+      </div>
+    </div>
+
+    <!-- Dynamic content -->
+    <div class="mt-6">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
